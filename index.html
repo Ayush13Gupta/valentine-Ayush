@@ -29,72 +29,52 @@
       margin-bottom: 50px;
     }
 
-    /* Reserve vertical space so scaling never overlaps */
+    /* Reserved space to avoid overlap */
     .buttons-area {
-      height: 260px;
+      height: 220px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 30px;
+      gap: 25px;
     }
 
-    .heart-wrapper {
-      width: 140px;
-      height: 140px;
+    .btn-wrapper {
+      width: 160px;
       display: flex;
       justify-content: center;
-      align-items: center;
     }
 
-    .heart-btn {
-      position: relative;
-      width: 120px;
-      height: 120px;
-      background: #ff4d6d;
-      transform: rotate(-45deg);
+    /* Modern stable button */
+    .valentine-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 150px;
+      height: 60px;
+      border-radius: 40px;
       border: none;
+      font-size: 18px;
+      font-weight: bold;
+      color: white;
       cursor: pointer;
       transition: transform 0.3s ease;
       transform-origin: center;
     }
 
-    .heart-btn::before,
-    .heart-btn::after {
-      content: "";
-      position: absolute;
-      width: 120px;
-      height: 120px;
-      background: inherit;
-      border-radius: 50%;
-    }
-
-    .heart-btn::before {
-      top: -60px;
-      left: 0;
-    }
-
-    .heart-btn::after {
-      left: 60px;
-      top: 0;
-    }
-
-    /* TEXT FIX — perfectly centered and readable */
-    .heart-text {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) rotate(45deg);
-      color: white;
-      font-weight: bold;
-      font-size: 18px;
-      text-align: center;
-      width: 100%;
-      pointer-events: none;
-      user-select: none;
+    .yes-btn {
+      background: linear-gradient(135deg, #ff4d6d, #ff758f);
+      box-shadow: 0 8px 18px rgba(255, 77, 109, 0.4);
     }
 
     .no-btn {
-      background: #adb5bd;
+      background: linear-gradient(135deg, #adb5bd, #868e96);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+    }
+
+    .icon {
+      font-size: 20px;
+      line-height: 1;
     }
 
     .message {
@@ -110,15 +90,17 @@
   <h1>Be my Valentine? ❤️</h1>
 
   <div class="buttons-area">
-    <div class="heart-wrapper">
-      <button class="heart-btn" id="yesBtn">
-        <div class="heart-text">Yes</div>
+    <div class="btn-wrapper">
+      <button class="valentine-btn yes-btn" id="yesBtn">
+        <span class="icon">❤️</span>
+        <span>Yes</span>
       </button>
     </div>
 
-    <div class="heart-wrapper">
-      <button class="heart-btn no-btn" id="noBtn">
-        <div class="heart-text" id="noText">No</div>
+    <div class="btn-wrapper">
+      <button class="valentine-btn no-btn" id="noBtn">
+        <span class="icon">💔</span>
+        <span id="noText">No</span>
       </button>
     </div>
   </div>
@@ -144,13 +126,13 @@
   let noScale = 1;
 
   noBtn.addEventListener("click", () => {
-    // Increase Yes button (bounded)
+    // Grow Yes button
     yesScale = Math.min(yesScale + 0.25, 2.4);
-    yesBtn.style.transform = `rotate(-45deg) scale(${yesScale})`;
+    yesBtn.style.transform = `scale(${yesScale})`;
 
-    // Decrease No button (bounded)
+    // Shrink No button
     noScale = Math.max(noScale - 0.12, 0.5);
-    noBtn.style.transform = `rotate(-45deg) scale(${noScale})`;
+    noBtn.style.transform = `scale(${noScale})`;
 
     // Change text in loop
     noText.textContent = phrases[index];
