@@ -68,4 +68,103 @@
       border-radius: 50%;
     }
 
-    .heart-btn
+    .heart-btn::before {
+      top: -60px;
+      left: 0;
+    }
+
+    .heart-btn::after {
+      left: 60px;
+      top: 0;
+    }
+
+    /* TEXT FIX — perfectly centered and readable */
+    .heart-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(45deg);
+      color: white;
+      font-weight: bold;
+      font-size: 18px;
+      text-align: center;
+      width: 100%;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .no-btn {
+      background: #adb5bd;
+    }
+
+    .message {
+      font-size: 22px;
+      color: #ff4d6d;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container" id="container">
+  <h1>Be my Valentine? ❤️</h1>
+
+  <div class="buttons-area">
+    <div class="heart-wrapper">
+      <button class="heart-btn" id="yesBtn">
+        <div class="heart-text">Yes</div>
+      </button>
+    </div>
+
+    <div class="heart-wrapper">
+      <button class="heart-btn no-btn" id="noBtn">
+        <div class="heart-text" id="noText">No</div>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const yesBtn = document.getElementById("yesBtn");
+  const noBtn = document.getElementById("noBtn");
+  const noText = document.getElementById("noText");
+  const container = document.getElementById("container");
+
+  const phrases = [
+    "Think Again",
+    "Think once more",
+    "Please Re think",
+    "Think Again",
+    "last time",
+    "Are you sure?"
+  ];
+
+  let index = 0;
+  let yesScale = 1;
+  let noScale = 1;
+
+  noBtn.addEventListener("click", () => {
+    // Increase Yes button (bounded)
+    yesScale = Math.min(yesScale + 0.25, 2.4);
+    yesBtn.style.transform = `rotate(-45deg) scale(${yesScale})`;
+
+    // Decrease No button (bounded)
+    noScale = Math.max(noScale - 0.12, 0.5);
+    noBtn.style.transform = `rotate(-45deg) scale(${noScale})`;
+
+    // Change text in loop
+    noText.textContent = phrases[index];
+    index = (index + 1) % phrases.length;
+  });
+
+  yesBtn.addEventListener("click", () => {
+    container.innerHTML = `
+      <div class="message">
+        Thanks beauty for being my valentine ❤️❤️💋
+      </div>
+    `;
+  });
+</script>
+
+</body>
+</html>
