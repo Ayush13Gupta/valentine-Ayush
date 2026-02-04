@@ -17,49 +17,42 @@
 
     .container {
       background: white;
-      padding: 40px 30px 60px;
+      padding: 40px 30px;
       border-radius: 20px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.2);
       width: 360px;
       text-align: center;
+      transition: all 0.3s ease;
     }
 
     h1 {
       color: #ff4d6d;
-      margin-bottom: 50px;
+      margin-bottom: 30px;
+      transition: margin 0.3s ease;
     }
 
-    /* Reserved space to avoid overlap */
+    /* Auto-adjusting layout */
     .buttons-area {
-      height: 220px;
       display: flex;
-      justify-content: space-between;
-      align-items: center;
+      flex-direction: column;
       gap: 25px;
+      align-items: center;
     }
 
-    .btn-wrapper {
-      width: 160px;
-      display: flex;
-      justify-content: center;
-    }
-
-    /* Modern stable button */
     .valentine-btn {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
-      width: 150px;
-      height: 60px;
       border-radius: 40px;
       border: none;
       font-size: 18px;
       font-weight: bold;
       color: white;
       cursor: pointer;
-      transition: transform 0.3s ease;
-      transform-origin: center;
+      transition: all 0.3s ease;
+      padding: 16px 30px;
+      white-space: nowrap;
     }
 
     .yes-btn {
@@ -90,19 +83,15 @@
   <h1>Be my Valentine? ❤️</h1>
 
   <div class="buttons-area">
-    <div class="btn-wrapper">
-      <button class="valentine-btn yes-btn" id="yesBtn">
-        <span class="icon">❤️</span>
-        <span>Yes</span>
-      </button>
-    </div>
+    <button class="valentine-btn yes-btn" id="yesBtn">
+      <span class="icon">❤️</span>
+      <span>Yes</span>
+    </button>
 
-    <div class="btn-wrapper">
-      <button class="valentine-btn no-btn" id="noBtn">
-        <span class="icon">💔</span>
-        <span id="noText">No</span>
-      </button>
-    </div>
+    <button class="valentine-btn no-btn" id="noBtn">
+      <span class="icon">💔</span>
+      <span id="noText">No</span>
+    </button>
   </div>
 </div>
 
@@ -122,16 +111,20 @@
   ];
 
   let index = 0;
-  let yesScale = 1;
+  let yesPadding = 30;
+  let yesFont = 18;
   let noScale = 1;
 
   noBtn.addEventListener("click", () => {
-    // Grow Yes button
-    yesScale = Math.min(yesScale + 0.25, 2.4);
-    yesBtn.style.transform = `scale(${yesScale})`;
+    // Grow Yes button endlessly (layout-aware)
+    yesPadding += 10;
+    yesFont += 2;
 
-    // Shrink No button
-    noScale = Math.max(noScale - 0.12, 0.5);
+    yesBtn.style.padding = `16px ${yesPadding}px`;
+    yesBtn.style.fontSize = `${yesFont}px`;
+
+    // Shrink No button gradually
+    noScale = Math.max(noScale - 0.1, 0.5);
     noBtn.style.transform = `scale(${noScale})`;
 
     // Change text in loop
